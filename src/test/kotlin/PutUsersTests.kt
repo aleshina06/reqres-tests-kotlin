@@ -1,20 +1,17 @@
 import Data.UserList
 import Data.UserWithAdditionalFields
+import api.BaseRequest
+import api.RestMethod
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
-import org.apache.http.HttpResponse
-import org.apache.http.client.fluent.Request
-import org.apache.http.entity.ContentType
-import org.apache.http.util.EntityUtils
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
 import java.io.IOException
 
 class PutUsersTests {
-    private val baseUrl = "https://reqres.in/api"
-
+    private val baseRequest = BaseRequest(BASE_URL)
     private val gson = Gson()
 
     @Test
@@ -29,23 +26,19 @@ class PutUsersTests {
         val requestBody = gson.toJson(user)
 
         //When
-        val response = Request.Put("$baseUrl/users/$userId")
-            .bodyString(requestBody, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.PUT, "/users/$userId", requestBody)
 
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
+            200, response.statusCode,
             "StatusCode is not 200."
         )
-        val responseBody = EntityUtils.toString(response.entity)
-        val jElement = JsonParser.parseString(responseBody).asJsonObject
-        val userJob: JsonPrimitive = jElement.getAsJsonPrimitive("job")
+        val jElement = JsonParser.parseString(response.body).asJsonObject
+        val userJob = jElement.getAsJsonPrimitive("job")
         Assertions.assertNotNull(userJob, "The job field should be exist")
-        val userName: JsonPrimitive = jElement.getAsJsonPrimitive("name")
+        val userName = jElement.getAsJsonPrimitive("name")
         Assertions.assertNotNull(userName, "The name field should be exist")
-        val updatedAt: JsonPrimitive = jElement.getAsJsonPrimitive("updatedAt")
+        val updatedAt = jElement.getAsJsonPrimitive("updatedAt")
         Assertions.assertNotNull(updatedAt, "The updatedAt field should be exist")
     }
 
@@ -60,18 +53,14 @@ class PutUsersTests {
         val requestBody = gson.toJson(user)
 
         //When
-        val response = Request.Put("$baseUrl/users/$userId")
-            .bodyString(requestBody, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.PUT, "/users/$userId", requestBody)
 
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
+            200, response.statusCode,
             "StatusCode is not 200."
         )
-        val responseBody = EntityUtils.toString(response.entity)
-        val jElement = JsonParser.parseString(responseBody).asJsonObject
+        val jElement = JsonParser.parseString(response.body).asJsonObject
         val testField: JsonPrimitive = jElement.getAsJsonPrimitive("testField")
         Assertions.assertNotNull(testField, "The testField field should be exist")
     }
@@ -85,19 +74,15 @@ class PutUsersTests {
         val requestBody = "{}"
 
         //When
-        val response = Request.Put("$baseUrl/users/$userId")
-            .bodyString(requestBody, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.PUT, "/users/$userId", requestBody)
 
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
+            200, response.statusCode,
             "StatusCode is not 200."
         )
-        val responseBody = EntityUtils.toString(response.entity)
-        val jElement = JsonParser.parseString(responseBody).asJsonObject
-        val testField: JsonPrimitive = jElement.getAsJsonPrimitive("updatedAt")
+        val jElement = JsonParser.parseString(response.body).asJsonObject
+        val testField = jElement.getAsJsonPrimitive("updatedAt")
         Assertions.assertNotNull(testField, "The testField field should be exist")
     }
 
@@ -110,33 +95,25 @@ class PutUsersTests {
         val requestBody = "{}"
 
         //When
-        val response = Request.Put("$baseUrl/users/$userId")
-            .bodyString(requestBody, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.PUT, "/users/$userId", requestBody)
 
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
+            200, response.statusCode,
             "StatusCode is not 200."
         )
-        val responseBody = EntityUtils.toString(response.entity)
-        val jElement = JsonParser.parseString(responseBody).asJsonObject
+        val jElement = JsonParser.parseString(response.body).asJsonObject
         val testField: JsonPrimitive = jElement.getAsJsonPrimitive("updatedAt")
         Assertions.assertNotNull(testField, "The testField field should be exist")
     }
 
     @Throws(IOException::class)
     private fun getUserList(): UserList {
-        val allUsersResponse: HttpResponse =
-            Request.Get("$baseUrl/users")
-                .execute()
-                .returnResponse()
-        val bodyString = EntityUtils.toString(allUsersResponse.entity)
-        val userList: UserList = gson.fromJson(bodyString, UserList::class.java)
+        val allUsersResponse = baseRequest.getResponse(RestMethod.GET, "/users", null)
+        val userList: UserList = gson.fromJson(allUsersResponse.body, UserList::class.java)
         if (userList.data == null) {
             throw IllegalStateException("UserList is empty.")
         }
-        return gson.fromJson(bodyString, UserList::class.java)
+        return gson.fromJson(allUsersResponse.body, UserList::class.java)
     }
 }

@@ -1,7 +1,9 @@
 import Data.User
 import Data.UserList
 import Data.UserPage
-import com.google.gson.GsonBuilder
+import api.BaseRequest
+import api.RestMethod
+import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
 import org.apache.http.HttpResponse
@@ -14,10 +16,8 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 
 class PostRegisterTests {
-    private val baseUrl = "https://reqres.in/api"
-    private val gson = GsonBuilder()
-        .setPrettyPrinting()
-        .create()
+    private val baseRequest = BaseRequest(BASE_URL)
+    private val gson = Gson()
 
     @Test
     @Throws(IOException::class)
@@ -27,21 +27,17 @@ class PostRegisterTests {
         val user: User = getUserList().data[0]
         val requestBody = setPasswordJson(user.id, "testPassword")
         //When
-        val response = Request.Post("$baseUrl/register")
-            .bodyString(requestBody, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.POST, "/register", requestBody)
         //Then
-        Assertions.assertEquals(200, response.statusLine.statusCode,
+        Assertions.assertEquals(200, response.statusCode,
             "StatusCode is not 200.")
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertNotNull(body, "Body shouldn't be null.")
-        val jelement = JsonParser.parseString(body)
-        val tokenFromResponse: JsonPrimitive = jelement.asJsonObject.getAsJsonPrimitive("token")
+        Assertions.assertNotNull(response.body, "Body shouldn't be null.")
+        val jelement = JsonParser.parseString(response.body)
+        val tokenFromResponse = jelement.asJsonObject.getAsJsonPrimitive("token")
         Assertions.assertNotNull(tokenFromResponse, "The token field should be exist")
-        val userIdFromResponse: JsonPrimitive = jelement.asJsonObject.getAsJsonPrimitive("id")
+        val userIdFromResponse = jelement.asJsonObject.getAsJsonPrimitive("id")
         Assertions.assertNotNull(userIdFromResponse, "The id field should be exist")
-        val userFromResponse: User = gson.fromJson(body, User::class.java)
+        val userFromResponse = gson.fromJson(response.body, User::class.java)
         Assertions.assertEquals(userFromResponse.id, user.id,
             "UserId in the request and the response are not equals.")
         Assertions.assertNotNull(
@@ -58,22 +54,19 @@ class PostRegisterTests {
         val user = User()
         user.email = "taleshina@test.com"
         user.password = "testPassword"
+        val requestBody = gson.toJson(user)
 
         //When
-        val test = gson.toJson(user)
-        val response = Request.Post("$baseUrl/register")
-            .bodyString(test, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.POST, "/register", requestBody)
+
         //Then
         Assertions.assertEquals(
-            400, response.statusLine.statusCode,
+            400, response.statusCode,
             "StatusCode is not 400."
         )
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertNotNull(body, "Body shouldn't be null.")
-        val jelement = JsonParser.parseString(body).asJsonObject
-        val errMessage: JsonPrimitive = jelement.getAsJsonPrimitive("error")
+        Assertions.assertNotNull(response.body, "Body shouldn't be null.")
+        val jelement = JsonParser.parseString(response.body).asJsonObject
+        val errMessage = jelement.getAsJsonPrimitive("error")
         Assertions.assertEquals("\"Note: Only defined users succeed registration\"", errMessage.toString())
     }
 
@@ -82,23 +75,18 @@ class PostRegisterTests {
     @DisplayName("Post Register. The password field is missing.")
     fun postRegisterPasswordFieldIsMissingTest() {
         //Given
-        val user: User = getUserList()!!.data!![0]
-
+        val user: User = getUserList().data[0]
+        val requestBody = gson.toJson(user)
         //When
-        val test = gson.toJson(user)
-        val response = Request.Post("$baseUrl/register")
-            .bodyString(test, ContentType.APPLICATION_JSON)
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.POST, "/register", requestBody)
         //Then
         Assertions.assertEquals(
-            400, response.statusLine.statusCode,
+            400, response.statusCode,
             "StatusCode is not 400."
         )
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertNotNull(body, "Body shouldn't be null.")
-        val jelement = JsonParser.parseString(body).asJsonObject
-        val errMessage: JsonPrimitive = jelement.getAsJsonPrimitive("error")
+        Assertions.assertNotNull(response.body, "Body shouldn't be null.")
+        val jelement = JsonParser.parseString(response.body).asJsonObject
+        val errMessage = jelement.getAsJsonPrimitive("error")
         Assertions.assertEquals("\"Missing password\"", errMessage.toString())
     }
 
@@ -109,21 +97,18 @@ class PostRegisterTests {
         fun postRegisterEmptyRequestBodyTest() {
             //Given
             val user = User()
+            val requestBody = gson.toJson(user)
 
             //When
-            val bodyString = gson.toJson(user)
-            val response = Request.Post("$baseUrl/register")
-                .bodyString(bodyString, ContentType.APPLICATION_JSON)
-                .execute()
-                .returnResponse()
+            val response = baseRequest.getResponse(RestMethod.POST, "/register", requestBody)
+
             //Then
             Assertions.assertEquals(
-                400, response.statusLine.statusCode,
+                400, response.statusCode,
                 "StatusCode is not 400."
             )
-            val body = EntityUtils.toString(response.entity)
-            Assertions.assertNotNull(body, "Body shouldn't be null.")
-            val jelement = JsonParser.parseString(body).asJsonObject
+            Assertions.assertNotNull(response.body, "Body shouldn't be null.")
+            val jelement = JsonParser.parseString(response.body).asJsonObject
             val errMessage: JsonPrimitive = jelement.getAsJsonPrimitive("error")
             Assertions.assertEquals("\"Missing email or username\"", errMessage.toString())
         }
@@ -140,38 +125,27 @@ class PostRegisterTests {
                 val test2 = gson.toJson(user2)
 
                 //When
-                val response1 = Request.Post("$baseUrl/register")
-                    .bodyString(test1, ContentType.APPLICATION_JSON)
-                    .execute()
-                    .returnResponse()
-                val response2 = Request.Post("$baseUrl/register")
-                    .bodyString(test2, ContentType.APPLICATION_JSON)
-                    .execute()
-                    .returnResponse()
+                val response1 = baseRequest.getResponse(RestMethod.POST, "/register", test1)
+                val response2 = baseRequest.getResponse(RestMethod.POST, "/register", test2)
                 //Then
                 Assertions.assertEquals(
-                    200, response1.statusLine.statusCode,
+                    200, response1.statusCode,
                     "StatusCode is not 200."
                 )
                 Assertions.assertEquals(
-                    200, response2.statusLine.statusCode,
+                    200, response2.statusCode,
                     "StatusCode is not 200."
                 )
-                val body1 = EntityUtils.toString(response1.entity)
-                val body2 = EntityUtils.toString(response2.entity)
-                val token1: String? = gson.fromJson<User>(body1, User::class.java).token
-                val token2: String? = gson.fromJson<User>(body2, User::class.java).token
+                val token1: String? = gson.fromJson(response1.body, User::class.java).token
+                val token2: String? = gson.fromJson(response2.body, User::class.java).token
                 Assertions.assertNotSame(token1, token2, "Tokens should be different for the different users.")
             }
 
     @Throws(IOException::class)
     private fun setPasswordJson(userId: Int, password: String): String {
-        val response = Request.Get("$baseUrl/users/$userId")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/users/$userId", null)
 
-        val responseBodyString = EntityUtils.toString(response.entity)
-        val userEmail: String? = gson.fromJson<UserPage>(responseBodyString, UserPage::class.java).data?.email
+        val userEmail: String? = gson.fromJson(response.body, UserPage::class.java).data?.email
         val data = User()
         data.email = userEmail
         data.password = password
@@ -180,15 +154,11 @@ class PostRegisterTests {
 
     @Throws(IOException::class)
     private fun getUserList(): UserList {
-        val allUsersResponse: HttpResponse =
-            Request.Get("$baseUrl/users")
-                .execute()
-                .returnResponse()
-        val bodyString = EntityUtils.toString(allUsersResponse.entity)
-        val userList: UserList = gson.fromJson(bodyString, UserList::class.java)
+        val allUsersResponse = baseRequest.getResponse(RestMethod.GET, "/users", null)
+        val userList: UserList = gson.fromJson(allUsersResponse.body, UserList::class.java)
         if (userList.data == null) {
             throw IllegalStateException("UserList is empty.")
         }
-        return gson.fromJson(bodyString, UserList::class.java)
+        return gson.fromJson(allUsersResponse.body, UserList::class.java)
     }
 }

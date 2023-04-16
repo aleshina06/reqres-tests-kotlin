@@ -4,10 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="GetResourceTests updated.">
+    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="DeleteUserTests updated.">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/DeleteUserTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/DeleteUserTests.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/api/BaseResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/api/BaseResponse.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,16 +49,7 @@
       <recent name="$PROJECT_DIR$/src/test/kotlin" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.DeleteUserTests.deleteUsersNonExistentUserTest">
-    <configuration name="DeleteUserTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="reqres-tests-kotlin" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DeleteUserTests" />
-      <option name="TEST_OBJECT" value="class" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.PutUsersTests">
     <configuration name="DeleteUserTests.deleteUsersNonExistentUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
@@ -79,19 +70,28 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GetResourcesTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PatchUsersTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="GetResourcesTests" />
+      <option name="MAIN_CLASS_NAME" value="PatchUsersTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="GetUsersTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PostRegisterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="GetUsersTests" />
+      <option name="MAIN_CLASS_NAME" value="PostRegisterTests" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="PutUsersTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="reqres-tests-kotlin" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="PutUsersTests" />
       <option name="TEST_OBJECT" value="class" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -110,11 +110,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.PutUsersTests" />
+        <item itemvalue="JUnit.PostRegisterTests" />
+        <item itemvalue="JUnit.PatchUsersTests" />
         <item itemvalue="JUnit.DeleteUserTests.deleteUsersNonExistentUserTest" />
         <item itemvalue="JUnit.DeleteUserTests.deleteUsersSuccessfulTest" />
-        <item itemvalue="JUnit.DeleteUserTests" />
-        <item itemvalue="JUnit.GetResourcesTests" />
-        <item itemvalue="JUnit.GetUsersTests" />
       </list>
     </recent_temporary>
   </component>
@@ -148,7 +148,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681675792640</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="DeleteUserTests updated.">
+      <created>1681677204539</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1681677204539</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -166,7 +173,8 @@
     <MESSAGE value="Initial commit" />
     <MESSAGE value="GetUsersTests updated." />
     <MESSAGE value="GetResourceTests updated." />
-    <option name="LAST_COMMIT_MESSAGE" value="GetResourceTests updated." />
+    <MESSAGE value="DeleteUserTests updated." />
+    <option name="LAST_COMMIT_MESSAGE" value="DeleteUserTests updated." />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>
