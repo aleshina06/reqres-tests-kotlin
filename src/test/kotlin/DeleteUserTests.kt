@@ -1,4 +1,7 @@
 import Data.ResourceList
+import api.BaseRequest
+import api.BaseResponse
+import api.RestMethod
 import com.google.gson.Gson
 import org.apache.http.client.fluent.Request
 import org.apache.http.util.EntityUtils
@@ -9,7 +12,7 @@ import java.io.IOException
 
 class DeleteUserTests {
 
-    private val baseUrl = "https://reqres.in/api"
+    private val baseRequest = BaseRequest(BASE_URL)
     private val gson = Gson()
 
     @Test
@@ -17,15 +20,13 @@ class DeleteUserTests {
     @DisplayName("Delete User. Successful deleting user.")
     fun deleteUsersSuccessfulTest() {
         //When
-        val response = Request.Delete("$baseUrl/users/1")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.DELETE, "/users/1", null)
         //Then
         Assertions.assertEquals(
-            204, response.statusLine.statusCode,
+            204, response.statusCode,
             "StatusCode is not 204."
         )
-        Assertions.assertNull(response.entity, "The response should be null.")
+        Assertions.assertTrue(response.isEntityNull, "The response should be null.")
     }
 
     @Test
@@ -35,29 +36,23 @@ class DeleteUserTests {
         //Given
         val nonExistentUserId = getResourceList().total + 1
         //When
-        val response = Request.Delete("$baseUrl/users/$nonExistentUserId")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.DELETE, "/users/$nonExistentUserId", null)
         //Then
         Assertions.assertEquals(
-            204, response.statusLine.statusCode,
+            204, response.statusCode,
             "StatusCode is not 204."
         )
-        Assertions.assertNull(response.entity, "The response should be null.")
+        Assertions.assertTrue(response.isEntityNull, "The response should be null.")
     }
 
     private fun getResourceList(): ResourceList {
-        val allResourcesResponse =
-            Request.Get("$baseUrl/unknown")
-                .execute()
-                .returnResponse()
-        val bodyString = EntityUtils.toString(allResourcesResponse.entity)
+        val allResourcesResponse = baseRequest.getResponse(RestMethod.GET, "/unknown", null)
 
-        val resourceList = gson.fromJson(bodyString, ResourceList::class.java)
+        val resourceList = gson.fromJson(allResourcesResponse.body, ResourceList::class.java)
         if (resourceList.data == null) {
             throw IllegalStateException("UserList is empty.")
         }
-        return gson.fromJson(bodyString, ResourceList::class.java)
+        return gson.fromJson(allResourcesResponse.body, ResourceList::class.java)
     }
 
 }
