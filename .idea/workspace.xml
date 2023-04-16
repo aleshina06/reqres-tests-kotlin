@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="DeleteUserTests updated.">
+    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="Patch, Put, Post files updated.">
+      <change afterPath="$PROJECT_DIR$/src/test/kotlin/AllTests.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/Resource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/Resource.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/ResourceList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/ResourceList.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/User.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -17,8 +20,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -36,35 +39,25 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.sourceCode.Kotlin&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "settings.editor.selected.configurable": "reference.settings.project.maven.repository.indices"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/test/kotlin" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.PutUsersTests">
+  <component name="RunManager" selected="JUnit.TestAllSelectPackage">
     <configuration name="DeleteUserTests.deleteUsersNonExistentUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DeleteUserTests" />
       <option name="METHOD_NAME" value="deleteUsersNonExistentUserTest" />
-      <option name="TEST_OBJECT" value="method" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="DeleteUserTests.deleteUsersSuccessfulTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="reqres-tests-kotlin" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" value="DeleteUserTests" />
-      <option name="METHOD_NAME" value="deleteUsersSuccessfulTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -97,6 +90,15 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="TestAllSelectPackage" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="reqres-tests-kotlin" />
+      <option name="PACKAGE_NAME" value="" />
+      <option name="MAIN_CLASS_NAME" value="TestAllSelectPackage" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JetRunConfigurationType">
       <method v="2">
         <option name="Make" enabled="true" />
@@ -110,11 +112,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.TestAllSelectPackage" />
         <item itemvalue="JUnit.PutUsersTests" />
         <item itemvalue="JUnit.PostRegisterTests" />
         <item itemvalue="JUnit.PatchUsersTests" />
         <item itemvalue="JUnit.DeleteUserTests.deleteUsersNonExistentUserTest" />
-        <item itemvalue="JUnit.DeleteUserTests.deleteUsersSuccessfulTest" />
       </list>
     </recent_temporary>
   </component>
@@ -155,7 +157,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681677204539</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="Patch, Put, Post files updated.">
+      <created>1681678992101</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1681678992101</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -174,7 +183,8 @@
     <MESSAGE value="GetUsersTests updated." />
     <MESSAGE value="GetResourceTests updated." />
     <MESSAGE value="DeleteUserTests updated." />
-    <option name="LAST_COMMIT_MESSAGE" value="DeleteUserTests updated." />
+    <MESSAGE value="Patch, Put, Post files updated." />
+    <option name="LAST_COMMIT_MESSAGE" value="Patch, Put, Post files updated." />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

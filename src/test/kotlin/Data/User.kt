@@ -1,13 +1,13 @@
 package Data
 
-import com.beust.klaxon.Json
+import com.google.gson.annotations.SerializedName
 
 class User {
     var id = 0
     var email: String? = null
-    @Json(name = "first_name")
+    @SerializedName("first_name")
     var firstName: String? = null
-    @Json(name = "last_name")
+    @SerializedName("last_name")
     var lastName: String? = null
     var password: String? = null
     var avatar: String? = null

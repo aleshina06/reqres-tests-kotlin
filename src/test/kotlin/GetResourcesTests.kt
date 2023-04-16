@@ -44,7 +44,7 @@ class GetResourcesTests {
         val resourceListFromBody: ResourceList = gson.fromJson(page1Response.body, ResourceList::class.java)
         val dataResourceList: List<Resource>? = resourceListFromBody.data
         Assertions.assertEquals(
-            dataResourceList?.size, resourceListFromBody.per_page,
+            dataResourceList?.size, resourceListFromBody.perPage,
             "Number of resources entities in the data list should be equals per_page."
         )
         Assertions.assertEquals(
