@@ -1,6 +1,5 @@
 package api
 
-import org.apache.http.HttpResponse
 import org.apache.http.client.fluent.Request
 import org.apache.http.entity.ContentType
 import java.io.IOException

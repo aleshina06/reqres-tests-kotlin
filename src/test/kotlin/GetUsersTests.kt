@@ -168,8 +168,4 @@ class GetUsersTests {
             val response: BaseResponse = baseRequest.getResponse(RestMethod.GET, "/users", null)
             return gson.fromJson(response.body, UserList::class.java)
         }
-
-    companion object {
-        private const val BASE_URL = "https://reqres.in/api"
-    }
 }

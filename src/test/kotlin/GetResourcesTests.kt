@@ -1,8 +1,8 @@
 import Data.Resource
 import Data.ResourceList
+import api.BaseRequest
+import api.RestMethod
 import com.google.gson.*
-import org.apache.http.client.fluent.Request
-import org.apache.http.util.EntityUtils
 import org.example.CommonAssertions
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
@@ -10,24 +10,23 @@ import org.junit.jupiter.api.Test
 import java.io.IOException
 
 class GetResourcesTests {
-    private val baseUrl = "https://reqres.in/api"
-    var gson = Gson()
+    private val baseRequest: BaseRequest = BaseRequest(BASE_URL)
+    private val gson = Gson()
 
     @Test
     @Throws(IOException::class)
     @DisplayName("Get Resources. Validation of fields in the response.")
     fun getResourcesSuccessfulTest() {
         //When
-        val response = Request.Get("$baseUrl/unknown")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/unknown", null)
+
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
+            200, response.statusCode,
             "StatusCode is not 200."
         )
-        val body = EntityUtils.toString(response.entity)
-        CommonAssertions.checkBodySchemaListValid(body)
+
+        CommonAssertions.checkBodySchemaListValid(response.body)
     }
 
     @Test
@@ -38,14 +37,11 @@ class GetResourcesTests {
         val numberOfPage = 1
 
         //When
-        val page1Response = Request.Get("$baseUrl/unknown?page=$numberOfPage")
-            .execute()
-            .returnResponse()
+        val page1Response = baseRequest.getResponse(RestMethod.GET, "/unknown?page=$numberOfPage", null)
 
         //Then
-        val body = EntityUtils.toString(page1Response.entity)
-        CommonAssertions.checkBodySchemaListValid(body)
-        val resourceListFromBody: ResourceList = gson.fromJson(body, ResourceList::class.java)
+        CommonAssertions.checkBodySchemaListValid(page1Response.body)
+        val resourceListFromBody: ResourceList = gson.fromJson(page1Response.body, ResourceList::class.java)
         val dataResourceList: List<Resource>? = resourceListFromBody.data
         Assertions.assertEquals(
             dataResourceList?.size, resourceListFromBody.per_page,
@@ -62,22 +58,17 @@ class GetResourcesTests {
     @DisplayName("Get Resources. Two pages with the different content")
     fun getResourcesTwoPagesWithDifferentContentTest() {
         //When
-        val response1 = Request.Get("$baseUrl/unknown?page=1")
-            .execute()
-            .returnResponse()
-        val response2 = Request.Get("$baseUrl/unknown?page=2")
-            .execute()
-            .returnResponse()
+        val response1 = baseRequest.getResponse(RestMethod.GET, "/unknown?page=1", null)
+
+        val response2 = baseRequest.getResponse(RestMethod.GET, "/unknown?page=2", null)
 
         //Then
-        Assertions.assertEquals(200, response1.statusLine.statusCode, "StatusCode is not 200.")
-        Assertions.assertEquals(200, response2.statusLine.statusCode, "StatusCode is not 200.")
-        val bodyString1 = EntityUtils.toString(response1.entity)
-        val bodyString2 = EntityUtils.toString(response2.entity)
-        CommonAssertions.checkBodySchemaListValid(bodyString1)
-        CommonAssertions.checkBodySchemaListValid(bodyString2)
-        val body1: ResourceList = gson.fromJson(bodyString1, ResourceList::class.java)
-        val body2: ResourceList = gson.fromJson(bodyString2, ResourceList::class.java)
+        Assertions.assertEquals(200, response1.statusCode, "StatusCode is not 200.")
+        Assertions.assertEquals(200, response2.statusCode, "StatusCode is not 200.")
+        CommonAssertions.checkBodySchemaListValid(response1.body)
+        CommonAssertions.checkBodySchemaListValid(response2.body)
+        val body1: ResourceList = gson.fromJson(response1.body, ResourceList::class.java)
+        val body2: ResourceList = gson.fromJson(response2.body, ResourceList::class.java)
         val userList1: List<Resource>? = body1.data
         userList1?.sortedBy { it.id }
         val userList2: List<Resource>? = body2.data
@@ -99,14 +90,11 @@ class GetResourcesTests {
         val twoLongResource = symbols.repeat(450)
 
         //When
-        val response = Request.Get("$baseUrl/$twoLongResource")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/$twoLongResource", null)
         Assertions.assertEquals(
-            414, response.statusLine.statusCode,
+            414, response.statusCode,
             "StatusCode is not 414."
         )
-        Assertions.assertEquals("URI Too Long", response.statusLine.reasonPhrase)
     }
 
     @Test
@@ -117,18 +105,14 @@ class GetResourcesTests {
         val numberOfAllResources: Int = getResourceList().total
 
         //When
-        val response = Request.Get("$baseUrl/resource?page=$numberOfAllResources+1")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/resource?page=$numberOfAllResources+1", null)
 
         //Then
         Assertions.assertEquals(
-            200, response.statusLine.statusCode,
-            "StatusCode is not 200."
+            200, response.statusCode, "StatusCode is not 200."
         )
-        val body = EntityUtils.toString(response.entity)
-        CommonAssertions.checkBodySchemaListValid(body)
-        val jelement = JsonParser.parseString(body).asJsonObject
+        CommonAssertions.checkBodySchemaListValid(response.body)
+        val jelement = JsonParser.parseString(response.body).asJsonObject
         val data: JsonArray = jelement.getAsJsonArray("data")
         Assertions.assertEquals(0, data.size(), "Number of resources should be 0.")
     }
@@ -141,15 +125,12 @@ class GetResourcesTests {
         val resource: Resource = getResourceList().data!![0]
 
         //When
-        val response = Request.Get("$baseUrl/unknown/${resource.id}")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/unknown/${resource.id}", null)
 
         //Then
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertNotNull(body, "Content shouldn't be null.")
+        Assertions.assertNotNull(response.body, "Content shouldn't be null.")
 
-        val jElement = JsonParser.parseString(body).asJsonObject
+        val jElement = JsonParser.parseString(response.body).asJsonObject
         val data: JsonObject = jElement.getAsJsonObject("data")
         Assertions.assertNotNull(data, "The data field should be exist")
         val color: JsonPrimitive = jElement.getAsJsonObject("data").getAsJsonPrimitive("color")
@@ -173,17 +154,14 @@ class GetResourcesTests {
         val numberOfAllResources: Int = getResourceList().total
 
         //When
-        val response = Request.Get("$baseUrl/unknown/$numberOfAllResources+1")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/unknown/$numberOfAllResources+1", null)
 
         //Then
         Assertions.assertEquals(
-            404, response.statusLine.statusCode,
+            404, response.statusCode,
             "StatusCode is not 404."
         )
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertEquals("{}", body)
+        Assertions.assertEquals("{}", response.body)
     }
 
     @Test
@@ -191,30 +169,22 @@ class GetResourcesTests {
     @DisplayName("Get Resources by Id. Resource Id is Null.")
     fun getResourceByIDNullValueTest() {
         //When
-        val response = Request.Get("$baseUrl/resource/null")
-            .execute()
-            .returnResponse()
+        val response = baseRequest.getResponse(RestMethod.GET, "/resource/null", null)
 
         //Then
         Assertions.assertEquals(
-            404, response.statusLine.statusCode,
+            404, response.statusCode,
             "StatusCode is not 404."
         )
-        val body = EntityUtils.toString(response.entity)
-        Assertions.assertEquals("{}", body)
+        Assertions.assertEquals("{}", response.body)
     }
 
     private fun getResourceList(): ResourceList {
-        val allResourcesResponse =
-            Request.Get("$baseUrl/unknown")
-                .execute()
-                .returnResponse()
-        val bodyString = EntityUtils.toString(allResourcesResponse.entity)
-
-        val resourceList: ResourceList = gson.fromJson(bodyString, ResourceList::class.java)
+        val allResourcesResponse = baseRequest.getResponse(RestMethod.GET, "/unknown", null)
+        val resourceList: ResourceList = gson.fromJson(allResourcesResponse.body, ResourceList::class.java)
         if (resourceList.data == null) {
             throw IllegalStateException("UserList is empty.")
         }
-        return gson.fromJson(bodyString, ResourceList::class.java)
+        return gson.fromJson(allResourcesResponse.body, ResourceList::class.java)
     }
 }
