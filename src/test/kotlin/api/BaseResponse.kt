@@ -8,7 +8,7 @@ import java.io.IOException
 class BaseResponse(private val response: HttpResponse) {
     private val gson = Gson()
 
-    val code = response.statusLine.statusCode
+    val statusCode = response.statusLine.statusCode
 
     val body: String
         get() = try {

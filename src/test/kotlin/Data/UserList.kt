@@ -1,13 +1,13 @@
 package Data
 
-import com.beust.klaxon.Json
+import com.google.gson.annotations.SerializedName
 
 class UserList(
     val page: Int = 0,
-    @Json(name = "per_page")
-    var per_page: Int = 0,
+    @SerializedName("per_page")
+    var perPage: Int = 0,
     var total: Int = 0,
-    @Json(name = "total_pages")
-    var total_pages: Int = 0,
+    @SerializedName("total_pages")
+    var totalPages: Int = 0,
     var data: List<User>) {
 }
