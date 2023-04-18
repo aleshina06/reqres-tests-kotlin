@@ -27,6 +27,7 @@ class GetResourcesTests {
         )
 
         CommonAssertions.checkBodySchemaListValid(response.body)
+        CommonAssertions.checkHeadersListValid(response)
     }
 
     @Test

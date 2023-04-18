@@ -5,6 +5,7 @@ import api.RestMethod
 import com.google.gson.Gson
 import org.apache.http.client.fluent.Request
 import org.apache.http.util.EntityUtils
+import org.example.CommonAssertions
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -27,6 +28,16 @@ class DeleteUserTests {
             "StatusCode is not 204."
         )
         Assertions.assertTrue(response.isEntityNull, "The response should be null.")
+
+        Assertions.assertNotNull(response.getHeader("Date"))
+        Assertions.assertNotNull(response.getHeader("Connection"))
+        Assertions.assertNotNull(response.getHeader("X-Powered-By"))
+        Assertions.assertNotNull(response.getHeader("Etag"))
+        Assertions.assertNotNull(response.getHeader("Via"))
+        Assertions.assertNotNull(response.getHeader("CF-Cache-Status"))
+        Assertions.assertNotNull(response.getHeader("Server"))
+        Assertions.assertEquals("Express", response.getHeader("X-Powered-By"))
+        Assertions.assertEquals("keep-alive", response.getHeader("Connection"))
     }
 
     @Test

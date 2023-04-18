@@ -1,5 +1,6 @@
 package org.example
 
+import api.BaseResponse
 import com.google.gson.JsonArray
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
@@ -19,5 +20,19 @@ object CommonAssertions {
         Assertions.assertNotNull(totalPages, "The total_pages field should be exist")
         val data: JsonArray = jelement.getAsJsonArray("data")
         Assertions.assertNotNull(data, "The data field should be exist")
+    }
+    fun checkHeadersListValid(response: BaseResponse) {
+        Assertions.assertNotNull(response.getHeader("Date"))
+        Assertions.assertNotNull(response.getHeader("Content-Type"))
+        Assertions.assertNotNull(response.getHeader("Transfer-Encoding"))
+        Assertions.assertNotNull(response.getHeader("Connection"))
+        Assertions.assertNotNull(response.getHeader("X-Powered-By"))
+        Assertions.assertNotNull(response.getHeader("Etag"))
+        Assertions.assertNotNull(response.getHeader("Via"))
+        Assertions.assertNotNull(response.getHeader("CF-Cache-Status"))
+        Assertions.assertNotNull(response.getHeader("Server"))
+        Assertions.assertEquals("application/json; charset=utf-8", response.getHeader("Content-Type"))
+        Assertions.assertEquals("Express", response.getHeader("X-Powered-By"))
+        Assertions.assertEquals("keep-alive", response.getHeader("Connection"))
     }
 }

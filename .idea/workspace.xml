@@ -4,13 +4,16 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="Patch, Put, Post files updated.">
-      <change afterPath="$PROJECT_DIR$/src/test/kotlin/AllTests.kt" afterDir="false" />
+    <list default="true" id="5429e7a2-1695-4563-b5cf-f28ef1431178" name="Changes" comment="Suites added">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/Resource.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/Resource.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/ResourceList.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/ResourceList.kt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/kotlin/Data/User.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/Data/User.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/CommonAssertions.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/CommonAssertions.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/DeleteUserTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/DeleteUserTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GetResourcesTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/GetResourcesTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/GetUsersTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/GetUsersTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PatchUsersTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PostRegisterTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/PutUsersTests.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/PutUsersTests.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/kotlin/api/BaseResponse.kt" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/kotlin/api/BaseResponse.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -53,39 +56,42 @@
     </key>
   </component>
   <component name="RunManager" selected="JUnit.TestAllSelectPackage">
-    <configuration name="DeleteUserTests.deleteUsersNonExistentUserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="DeleteUserTests.deleteUsersSuccessfulTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="DeleteUserTests" />
-      <option name="METHOD_NAME" value="deleteUsersNonExistentUserTest" />
+      <option name="METHOD_NAME" value="deleteUsersSuccessfulTest" />
       <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PatchUsersTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PatchUsersTests.patchUsersSuccessfulTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PatchUsersTests" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="patchUsersSuccessfulTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PostRegisterTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PostRegisterTests.postRegisterSuccessfulTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PostRegisterTests" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="postRegisterSuccessfulTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="PutUsersTests" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+    <configuration name="PutUsersTests.putUsersSuccessfulTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
       <module name="reqres-tests-kotlin" />
       <option name="PACKAGE_NAME" value="" />
       <option name="MAIN_CLASS_NAME" value="PutUsersTests" />
-      <option name="TEST_OBJECT" value="class" />
+      <option name="METHOD_NAME" value="putUsersSuccessfulTest" />
+      <option name="TEST_OBJECT" value="method" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -113,10 +119,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="JUnit.TestAllSelectPackage" />
-        <item itemvalue="JUnit.PutUsersTests" />
-        <item itemvalue="JUnit.PostRegisterTests" />
-        <item itemvalue="JUnit.PatchUsersTests" />
-        <item itemvalue="JUnit.DeleteUserTests.deleteUsersNonExistentUserTest" />
+        <item itemvalue="JUnit.PostRegisterTests.postRegisterSuccessfulTest" />
+        <item itemvalue="JUnit.PutUsersTests.putUsersSuccessfulTest" />
+        <item itemvalue="JUnit.PatchUsersTests.patchUsersSuccessfulTest" />
+        <item itemvalue="JUnit.DeleteUserTests.deleteUsersSuccessfulTest" />
       </list>
     </recent_temporary>
   </component>
@@ -164,7 +170,14 @@
       <option name="project" value="LOCAL" />
       <updated>1681678992101</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Suites added">
+      <created>1681680329324</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1681680329324</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -184,7 +197,8 @@
     <MESSAGE value="GetResourceTests updated." />
     <MESSAGE value="DeleteUserTests updated." />
     <MESSAGE value="Patch, Put, Post files updated." />
-    <option name="LAST_COMMIT_MESSAGE" value="Patch, Put, Post files updated." />
+    <MESSAGE value="Suites added" />
+    <option name="LAST_COMMIT_MESSAGE" value="Suites added" />
   </component>
   <component name="XDebuggerManager">
     <pin-to-top-manager>

@@ -25,6 +25,7 @@ class GetUsersTests {
             "StatusCode is not 200."
         )
         CommonAssertions.checkBodySchemaListValid(response.body)
+        CommonAssertions.checkHeadersListValid(response)
     }
 
     @Test

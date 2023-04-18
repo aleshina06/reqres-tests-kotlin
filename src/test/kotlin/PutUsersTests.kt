@@ -5,6 +5,7 @@ import api.RestMethod
 import com.google.gson.Gson
 import com.google.gson.JsonParser
 import com.google.gson.JsonPrimitive
+import org.example.CommonAssertions
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -33,6 +34,7 @@ class PutUsersTests {
             200, response.statusCode,
             "StatusCode is not 200."
         )
+        CommonAssertions.checkHeadersListValid(response)
         val jElement = JsonParser.parseString(response.body).asJsonObject
         val userJob = jElement.getAsJsonPrimitive("job")
         Assertions.assertNotNull(userJob, "The job field should be exist")

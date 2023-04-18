@@ -9,6 +9,7 @@ import org.apache.http.HttpResponse
 import org.apache.http.client.fluent.Request
 import org.apache.http.entity.ContentType
 import org.apache.http.util.EntityUtils
+import org.example.CommonAssertions
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -45,6 +46,8 @@ class PatchUsersTests {
         Assertions.assertNotNull(userName, "The name field should be exist")
         val updatedAt: JsonPrimitive = jElement.getAsJsonPrimitive("updatedAt")
         Assertions.assertNotNull(updatedAt, "The updatedAt field should be exist")
+
+        CommonAssertions.checkHeadersListValid(response)
     }
 
     @Test

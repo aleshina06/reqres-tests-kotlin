@@ -10,6 +10,7 @@ import org.apache.http.HttpResponse
 import org.apache.http.client.fluent.Request
 import org.apache.http.entity.ContentType
 import org.apache.http.util.EntityUtils
+import org.example.CommonAssertions
 import org.junit.jupiter.api.Assertions
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
@@ -32,6 +33,7 @@ class PostRegisterTests {
         Assertions.assertEquals(200, response.statusCode,
             "StatusCode is not 200.")
         Assertions.assertNotNull(response.body, "Body shouldn't be null.")
+
         val jelement = JsonParser.parseString(response.body)
         val tokenFromResponse = jelement.asJsonObject.getAsJsonPrimitive("token")
         Assertions.assertNotNull(tokenFromResponse, "The token field should be exist")
@@ -44,6 +46,18 @@ class PostRegisterTests {
             userFromResponse.token,
             "Token shouldn't be null"
         )
+
+        Assertions.assertNotNull(response.getHeader("Date"))
+        Assertions.assertNotNull(response.getHeader("Content-Type"))
+        Assertions.assertNotNull(response.getHeader("Connection"))
+        Assertions.assertNotNull(response.getHeader("X-Powered-By"))
+        Assertions.assertNotNull(response.getHeader("Etag"))
+        Assertions.assertNotNull(response.getHeader("Via"))
+        Assertions.assertNotNull(response.getHeader("CF-Cache-Status"))
+        Assertions.assertNotNull(response.getHeader("Server"))
+        Assertions.assertEquals("application/json; charset=utf-8", response.getHeader("Content-Type"))
+        Assertions.assertEquals("Express", response.getHeader("X-Powered-By"))
+        Assertions.assertEquals("keep-alive", response.getHeader("Connection"))
     }
 
     @Test
